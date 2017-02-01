@@ -34,6 +34,8 @@ public:
 
 signals:
 
+    void dispatchMsg(QString msg);
+
 public slots:
 };
 

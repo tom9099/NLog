@@ -10,14 +10,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     mTimer = new QTimer(this);
-
     connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimer()));
-    mTimer->start(16);
+    mTimer->start(150);
 }
 
 void MainWindow::onTimer()
 {
     //qDebug() << "16 msec";
+    static int i = 0;
+    NLog::it().msg(QString("%1. tick\r\n").arg(++i));
 }
 
 MainWindow::~MainWindow()
@@ -28,9 +29,13 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
     NLog::it().init();
+    ui->pushButton->setEnabled(false);
+    ui->pushButton_2->setEnabled(true);
 }
 
 void MainWindow::on_pushButton_2_clicked()
-{
+{    
     NLog::it().shutdown();
+    ui->pushButton->setEnabled(true);
+    ui->pushButton_2->setEnabled(false);
 }

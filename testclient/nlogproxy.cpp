@@ -14,17 +14,18 @@ void NLog::init()
     mContext->moveToThread(mWorkerThread);
     connect(mWorkerThread, SIGNAL(started()), mContext, SLOT(init()));
     connect(mWorkerThread, SIGNAL(finished()), mContext, SLOT(shutdown()));
+    connect(this, SIGNAL(dispatchMsg(QString)), mContext, SLOT(msg(QString)));
 
     mWorkerThread->start();
 }
 
 void NLog::msg(QString msg)
 {
-
+    emit dispatchMsg(msg);
 }
 
 void NLog::shutdown()
-{
+{    
     mWorkerThread->exit();
     mWorkerThread->wait();
     delete mContext;
