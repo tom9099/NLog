@@ -20,10 +20,14 @@ LogViewerWindow::LogViewerWindow(QString ip, int port, QWidget *parent) :
     connect(mWorkerThread, SIGNAL(finished()), mContext, SLOT(shutdown()));
     connect(mContext, SIGNAL(socketDisconnected()), this, SLOT(on_pushButton_clicked()));
     connect(mContext, SIGNAL(messageReceived(QByteArray)), this, SLOT(messageReceived(QByteArray)));
-    connect(mTimer, SIGNAL(timeout()), this, SLOT(refreshUi()));
+    connect(mTimer, SIGNAL(timeout()), this, SLOT(refreshUi()));    
 
     mTimer->start(300);
     mWorkerThread->start();
+
+    mUILastUpdated = mUIUpdateTimer.elapsed();
+    mSkippedmessages = 0;
+    mTotalBytesReceived = 0;
 }
 
 LogViewerWindow::~LogViewerWindow()
@@ -43,11 +47,27 @@ void LogViewerWindow::refreshUi()
     ui->plainTextEdit->setUpdatesEnabled(true);
     ui->plainTextEdit->update();
     ui->plainTextEdit->setUpdatesEnabled(false);
+    mUILastUpdated = mUIUpdateTimer.elapsed();
 }
 
 void LogViewerWindow::messageReceived(QByteArray bytes)
 {
-    QString msg = bytes;
+    mTotalBytesReceived += bytes.length();
 
-    ui->plainTextEdit->appendPlainText(msg);
+    if (mUIUpdateTimer.elapsed() - mUILastUpdated < 750)
+    {
+        QString msg = bytes;
+        ui->plainTextEdit->appendPlainText(msg);
+        if (mSkippedmessages)
+        {
+            QString s = QString("*** %1 Messages Were Skipped***").arg(mSkippedmessages);
+            ui->plainTextEdit->appendPlainText(s);
+            this->setWindowTitle(s);
+        }
+        mSkippedmessages = 0;
+    }
+    else
+    {
+        mSkippedmessages++;
+    }
 }

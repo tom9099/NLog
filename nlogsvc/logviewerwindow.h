@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QThread>
 #include <QTimer>
+#include <QElapsedTimer>
 #include "asynccontext.h"
 
 namespace Ui {
@@ -17,6 +18,10 @@ class LogViewerWindow : public QDialog
     QThread             *mWorkerThread;
     AsyncContext        *mContext;
     QTimer              *mTimer;
+    QElapsedTimer       mUIUpdateTimer;
+    qint64              mUILastUpdated;
+    int                 mSkippedmessages;
+    qint64              mTotalBytesReceived;
 
 public:
     explicit LogViewerWindow(QString ip, int port, QWidget *parent = 0);

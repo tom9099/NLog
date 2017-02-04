@@ -57,7 +57,7 @@ void MainWindow::onTimer()
 {
     static int i = 0;
 
-    for (int k = 0; k < 1; k++)
+    for (int k = 0; k < ui->spinBox->value(); k++)
     {
         NLog::it().msg(QString("%1. tick - random data :" + GetRandomString(128)).arg(++i));
     }
