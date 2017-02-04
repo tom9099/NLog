@@ -23,7 +23,7 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="lineEdit_IP">
     <property name="geometry">
      <rect>
       <x>75</x>
@@ -68,7 +68,7 @@
      <string>Connect</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="lineEdit_Port">
     <property name="geometry">
      <rect>
       <x>75</x>
