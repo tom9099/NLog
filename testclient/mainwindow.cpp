@@ -2,6 +2,43 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 
+QString GetRandomString(int randomStringLength, bool upperCase = true, bool lowerCase = true, bool numbers = true)
+{
+#if 0
+    return "<random>";
+#else
+    QString sNumbers("0123456789");
+    QString sUppercase("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    QString sLowercase("abcdefghijklmnopqrstuvwxyz");
+
+    QString possibleCharacters("");
+
+    if (upperCase)
+    {
+        possibleCharacters += sUppercase;
+    }
+    if (lowerCase)
+    {
+        possibleCharacters += sLowercase;
+    }
+    if (numbers)
+    {
+        possibleCharacters += sNumbers;
+    }
+
+    QString randomString;
+    for(int i=0; i<randomStringLength; ++i)
+    {
+        int index = qrand() % possibleCharacters.length();
+        QChar nextChar = possibleCharacters.at(index);
+        randomString.append(nextChar);
+    }
+    return randomString;
+#endif
+}
+
+
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -11,14 +48,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mTimer = new QTimer(this);
     connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimer()));
-    mTimer->start(150);
+    mTimer->start(1);
+
+    qsrand(123);
 }
 
 void MainWindow::onTimer()
 {
-    //qDebug() << "16 msec";
     static int i = 0;
-    NLog::it().msg(QString("%1. tick\r\n").arg(++i));
+
+    for (int k = 0; k < 1; k++)
+    {
+        NLog::it().msg(QString("%1. tick - random data :" + GetRandomString(128)).arg(++i));
+    }
 }
 
 MainWindow::~MainWindow()
