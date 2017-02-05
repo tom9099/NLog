@@ -37,7 +37,7 @@ void AsyncContext::readyRead()
     // read stuff from the network
     mNetworkBuffer.append(mSocket->readAll());
 
-    while (mNetworkBuffer.size())
+    while (mNetworkBuffer.size() >= 4)
     {
         // we've received at least 4 bytes, extract the payload size
         if (mNetworkBuffer.size() >= 4 && mPayloadSize == 0)
