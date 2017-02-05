@@ -25,9 +25,11 @@ LogViewerWindow::LogViewerWindow(QString ip, int port, QWidget *parent) :
     mTimer->start(300);
     mWorkerThread->start();
 
-    mUILastUpdated = mUIUpdateTimer.elapsed();
+    mMsgPerSecTimer = mUILastUpdated = mUIUpdateTimer.elapsed();
     mSkippedmessages = 0;
     mTotalBytesReceived = 0;
+    mTotalMessages = 0;
+    mMessagesPerSec = 0;
 }
 
 LogViewerWindow::~LogViewerWindow()
@@ -52,19 +54,29 @@ void LogViewerWindow::refreshUi()
 
 void LogViewerWindow::messageReceived(QByteArray bytes)
 {
-    mTotalBytesReceived += bytes.length();
+    qint64 elapsed = mUIUpdateTimer.elapsed();
+    mTotalBytesReceived += bytes.size();
+    //qDebug() << elapsed - mMsgPerSecTimer;
+    if ((elapsed - mMsgPerSecTimer) > 1000)
+    {
+        mMsgPerSecTimer = elapsed;
 
-    if (mUIUpdateTimer.elapsed() - mUILastUpdated < 750)
+        this->setWindowTitle(QString("Mesages: %1 Msg/sec: %2 Total bytes: %3 KB").arg(mTotalMessages).arg(mTotalMessages - mMessagesPerSec).arg(mTotalBytesReceived / 1024));
+        mMessagesPerSec = mTotalMessages;
+    }
+
+    if (elapsed - mUILastUpdated < 2500)
     {
         QString msg = bytes;
         ui->plainTextEdit->appendPlainText(msg);
+        mTotalMessages++;
         if (mSkippedmessages)
         {
             QString s = QString("*** %1 Messages Were Skipped***").arg(mSkippedmessages);
             ui->plainTextEdit->appendPlainText(s);
-            this->setWindowTitle(s);
-        }
-        mSkippedmessages = 0;
+            //qDebug() << s;
+            mSkippedmessages = 0;
+        }        
     }
     else
     {

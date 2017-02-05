@@ -22,6 +22,9 @@ class LogViewerWindow : public QDialog
     qint64              mUILastUpdated;
     int                 mSkippedmessages;
     qint64              mTotalBytesReceived;
+    qint64              mTotalMessages;
+    qint64              mMessagesPerSec;
+    qint64              mMsgPerSecTimer;
 
 public:
     explicit LogViewerWindow(QString ip, int port, QWidget *parent = 0);

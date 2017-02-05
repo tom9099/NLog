@@ -11,6 +11,9 @@ class AsyncContext : public QObject
     QString             mIP;
     int                 mPort;
     QTcpSocket          *mSocket;
+    QByteArray          mNetworkBuffer;
+    QByteArray          mPayload;
+    int                 mPayloadSize;
 
 public:
     explicit AsyncContext(QString ip, int port, QObject *parent = 0);
