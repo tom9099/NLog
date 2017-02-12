@@ -35,7 +35,10 @@ void AsyncContext::disconnected()
 void AsyncContext::readyRead()
 {
     // read stuff from the network
-    mNetworkBuffer.append(mSocket->readAll());
+    while (mSocket->bytesAvailable())
+    {
+        mNetworkBuffer.append(mSocket->readAll());
+    }
 
     while (mNetworkBuffer.size() >= 4)
     {

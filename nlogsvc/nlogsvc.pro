@@ -15,11 +15,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     logviewerwindow.cpp \
-    asynccontext.cpp
+    asynccontext.cpp \
+    settingswindow.cpp
 
 HEADERS  += mainwindow.h \
     logviewerwindow.h \
-    asynccontext.h
+    asynccontext.h \
+    settingswindow.h
 
 FORMS    += mainwindow.ui \
-    logviewerwindow.ui
+    logviewerwindow.ui \
+    settingswindow.ui
