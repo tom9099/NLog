@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mTimer = new QTimer(this);
     connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimer()));
-    mTimer->start(1);
+    mTimer->start(1000);
 
     qsrand(123);
 }
