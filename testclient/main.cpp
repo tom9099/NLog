@@ -1,10 +1,10 @@
 #include "mainwindow.h"
 #include <QApplication>
-#include <Windows.h>
+#include "nshared.h"
 
 int main(int argc, char *argv[])
 {
-    SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
+    NShared::boostPriority();
 
     QApplication a(argc, argv);
     MainWindow w;

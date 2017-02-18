@@ -8,6 +8,9 @@ class NSHAREDSHARED_EXPORT NShared
 
 public:
     NShared();
+
+    static void boostPriority();
+
 };
 
 #endif // NSHARED_H
