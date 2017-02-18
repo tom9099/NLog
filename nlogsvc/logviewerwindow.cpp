@@ -1,4 +1,5 @@
 #include "logviewerwindow.h"
+#include "settingswindow.h"
 #include "ui_logviewerwindow.h"
 #include <QHostAddress>
 
@@ -82,4 +83,10 @@ void LogViewerWindow::messageReceived(QByteArray bytes)
     {
         mSkippedmessages++;
     }
+}
+
+void LogViewerWindow::on_pushButton_2_clicked()
+{
+    SettingsWindow *settings = new SettingsWindow(this);
+    settings->exec();
 }

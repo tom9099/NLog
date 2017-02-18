@@ -35,6 +35,8 @@ private slots:
     void messageReceived(QByteArray bytes);
     void refreshUi();
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::LogViewerWindow *ui;
 };
