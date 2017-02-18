@@ -12,9 +12,11 @@
 #if _WIN64
     #define NS_WINDOWS 1
     #define NS_LINUX 0
-#else
+#elif __linux__
     #define NS_WINDOWS 0
     #define NS_LINUX 1
+#else
+#error "What are you?? _WIN64 or __linux__ must be defined."
 #endif
 
 #endif // NSHARED_GLOBAL_H
