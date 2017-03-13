@@ -66,19 +66,12 @@ void AsyncContext::msg(QString msg)
     {
         QByteArray tmp;
         int size = msg.size();
+        tmp.reserve(size + 4);
 
-        union
-        {
-            int x;
-            char bytes[4];
-        } bytebuffer;
-
-        bytebuffer.x = size;
-
-        tmp.append(bytebuffer.bytes[0]);
-        tmp.append(bytebuffer.bytes[1]);
-        tmp.append(bytebuffer.bytes[2]);
-        tmp.append(bytebuffer.bytes[3]);
+        tmp.append((size >> 24) & 0xFF);
+        tmp.append((size >> 16) & 0xFF);
+        tmp.append((size >> 8) & 0xFF);
+        tmp.append(size & 0xFF);
 
         tmp.append(msg.toStdString().c_str(), size);
         client->mSocket->write(tmp);

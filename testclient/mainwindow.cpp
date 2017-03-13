@@ -4,8 +4,8 @@
 
 QString GetRandomString(int randomStringLength, bool upperCase = true, bool lowerCase = true, bool numbers = true)
 {
-#if 0
-    return "<random>";
+#if 1
+    return "<random><random><random><random><random><random><random><random>";
 #else
     QString sNumbers("0123456789");
     QString sUppercase("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     mTimer = new QTimer(this);
     connect(mTimer, SIGNAL(timeout()), this, SLOT(onTimer()));
-    mTimer->start(1000);
+    mTimer->start(1);
 
     qsrand(123);
 }

@@ -2,6 +2,8 @@
 #include <QThread>
 #include <QHostAddress>
 #include <QDebug>
+#include <QMessageBox>
+#include <Windows.h>
 
 AsyncContext::AsyncContext(QString ip, int port, QObject *parent) : QObject(parent)
 {
@@ -31,11 +33,25 @@ void AsyncContext::disconnected()
     emit socketDisconnected();
 }
 
+
+// move to nshared
+void ns_fail_if(QString cond, QString msg)
+{
+    QMessageBox msgBox;
+    msgBox.setText(cond + " " + msg);
+    msgBox.exec();
+
+    TerminateProcess(GetCurrentProcess(), 0);
+}
+
+#define NS_FAIL_IF(cond, msg) do { if (cond) ns_fail_if(#cond, msg); } while (0)
+// move to nshared
+
 // <4 bytes signed int payload size>|<payload>
 void AsyncContext::readyRead()
 {
     // read stuff from the network
-    while (mSocket->bytesAvailable())
+    if (mSocket->bytesAvailable())
     {
         mNetworkBuffer.append(mSocket->readAll());
     }
@@ -45,18 +61,11 @@ void AsyncContext::readyRead()
         // we've received at least 4 bytes, extract the payload size
         if (mNetworkBuffer.size() >= 4 && mPayloadSize == 0)
         {
-            union
-            {
-                int x;
-                char bytes[4];
-            } bytebuffer;
+            mPayloadSize = int((unsigned char)(mNetworkBuffer[0]) << 24 |
+                               (unsigned char)(mNetworkBuffer[1]) << 16 |
+                               (unsigned char)(mNetworkBuffer[2]) << 8 |
+                               (unsigned char)(mNetworkBuffer[3]));
 
-            bytebuffer.bytes[0] = mNetworkBuffer[0];
-            bytebuffer.bytes[1] = mNetworkBuffer[1];
-            bytebuffer.bytes[2] = mNetworkBuffer[2];
-            bytebuffer.bytes[3] = mNetworkBuffer[3];
-
-            mPayloadSize = bytebuffer.x;
             mNetworkBuffer.remove(0, 4);
         }
 
