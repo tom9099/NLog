@@ -3,6 +3,11 @@
 
 #include <QtCore/qglobal.h>
 
+#define NS_NONCOPYABLE(classname) \
+    classname(); \
+    classname( const classname& other ); \
+    classname& operator=( const classname& );
+
 #if defined(NSHARED_LIBRARY)
 #  define NSHAREDSHARED_EXPORT Q_DECL_EXPORT
 #else

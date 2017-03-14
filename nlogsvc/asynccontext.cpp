@@ -33,20 +33,6 @@ void AsyncContext::disconnected()
     emit socketDisconnected();
 }
 
-
-// move to nshared
-void ns_fail_if(QString cond, QString msg)
-{
-    QMessageBox msgBox;
-    msgBox.setText(cond + " " + msg);
-    msgBox.exec();
-
-    TerminateProcess(GetCurrentProcess(), 0);
-}
-
-#define NS_FAIL_IF(cond, msg) do { if (cond) ns_fail_if(#cond, msg); } while (0)
-// move to nshared
-
 // <4 bytes signed int payload size>|<payload>
 void AsyncContext::readyRead()
 {
