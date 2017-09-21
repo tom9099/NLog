@@ -81,3 +81,8 @@ void MainWindow::on_pushButton_2_clicked()
     ui->pushButton->setEnabled(true);
     ui->pushButton_2->setEnabled(false);
 }
+
+void MainWindow::on_spinBox_editingFinished()
+{
+
+}
