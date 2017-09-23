@@ -8,6 +8,8 @@
 #include "xml/rapidxml_print.hpp"
 #include "xml/rapidxml_utils.hpp"
 
+#include <QMutex>
+
 class NConfig
 {
 
@@ -21,6 +23,12 @@ public:
 
     void init();
     void save();
+
+    static NConfig& it()
+    {
+        static NConfig instance;
+        return instance;
+    }
 
 };
 

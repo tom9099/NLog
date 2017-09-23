@@ -19,7 +19,7 @@
      <rect>
       <x>20</x>
       <y>20</y>
-      <width>128</width>
+      <width>163</width>
       <height>56</height>
      </rect>
     </property>
@@ -48,7 +48,7 @@
      <item>
       <widget class="QSpinBox" name="spinBox">
        <property name="maximum">
-        <number>999</number>
+        <number>1000000</number>
        </property>
       </widget>
      </item>
@@ -61,7 +61,7 @@
      <x>0</x>
      <y>0</y>
      <width>223</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

@@ -2,6 +2,7 @@
 #define NSHARED_H
 
 #include "nshared_global.h"
+#include "nshared_config.h"
 
 #define NS_FAIL_IF(cond, msg) do { if (cond) ns_fail_if(#cond, msg); } while (0)
 

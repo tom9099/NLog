@@ -1,4 +1,5 @@
 #include "asynccontext.h"
+#include "nshared.h"
 #include <QDataStream>
 #include <QFile>
 

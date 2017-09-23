@@ -4,7 +4,7 @@
 
 QString GetRandomString(int randomStringLength, bool upperCase = true, bool lowerCase = true, bool numbers = true)
 {
-#if 1
+#if 0
     return "<random><random><random><random><random><random><random><random>";
 #else
     QString sNumbers("0123456789");
