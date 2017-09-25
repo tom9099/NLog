@@ -1,34 +1,32 @@
 #ifndef NSHARED_CONFIG_H_
 #define NSHARED_CONFIG_H_
 
+#include <QMutex>
+#include <QString>
+#include <QMap>
+
 #include "nshared_global.h"
 
-#include "xml/rapidxml.hpp"
-#include "xml/rapidxml_iterators.hpp"
-#include "xml/rapidxml_print.hpp"
-#include "xml/rapidxml_utils.hpp"
-
-#include <QMutex>
-
-class NConfig
+class NSHAREDSHARED_EXPORT NConfig
 {
-
-    NS_NONCOPYABLE(NConfig)
 
 protected:
 
-    void loadDefault();
+    QMap<QString, QString>          mProperties;
+    QMutex                          mCfgMutex;
+
+    void loadDefault();    
 
 public:
+
+    NConfig();
 
     void init();
     void save();
 
-    static NConfig& it()
-    {
-        static NConfig instance;
-        return instance;
-    }
+    static NConfig& it();
+
+    int getInt32(const QString &name, int defaultValue);
 
 };
 

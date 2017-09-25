@@ -45,7 +45,7 @@ else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-ns
 # 64bit windows??
 #
 else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-nshared-Desktop_Qt_5_9_1_MSVC2015_64bit-Release/release/nshared.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-nshared-Desktop_Qt_5_9_1_MSVC2015_64bit-Debug/debug/nshared.lib
+else:win32:!win32-g++:CONFIG(debug,   debug|release): PRE_TARGETDEPS += $$PWD/../build-nshared-Desktop_Qt_5_9_1_MSVC2015_64bit-Debug/debug/nshared.lib
 
 #
 # linux?? (32 or 64bit?)

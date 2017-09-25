@@ -38,13 +38,12 @@ AsyncContext::AsyncContext(QObject *parent) : QObject(parent)
 void AsyncContext::init()
 {
     mServer = new QTcpServer();
-    connect(mServer, SIGNAL(newConnection()), this, SLOT(incomingConnection()));
+    connect(mServer, SIGNAL(newConnection()), this, SLOT(incomingConnection()));    
 
-    bool status = mServer->listen(QHostAddress("127.0.0.1"), 9090);
+    int port = NConfig::it().getInt32("port", 9090);
+    bool status = mServer->listen(QHostAddress("127.0.0.1"), port);
 
     qDebug() << status;
-
-
 }
 
 void AsyncContext::shutdown()
