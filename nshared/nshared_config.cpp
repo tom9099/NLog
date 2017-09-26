@@ -19,6 +19,8 @@ NConfig::NConfig()
     QFile                           f("config.xml");
     QTextStream                     in(&f);
 
+
+
     if (!f.open(QFile::ReadOnly | QFile::Text))
         return;
 
