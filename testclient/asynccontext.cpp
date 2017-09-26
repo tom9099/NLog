@@ -43,7 +43,10 @@ void AsyncContext::init()
     int port = NConfig::it().getInt32("port", 9090);
     bool status = mServer->listen(QHostAddress("127.0.0.1"), port);
 
-    qDebug() << status;
+    if (!status)
+    {
+        qDebug() << "Could not listen on port " << port << "\n";
+    }
 }
 
 void AsyncContext::shutdown()
